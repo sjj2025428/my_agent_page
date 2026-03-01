@@ -21,17 +21,16 @@
             font-size: 18px;
         }
     </style>
-    <!-- 引入扣子 Chat SDK 核心库 -->
-    <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-100-M/coze/chat-sdk/v1/index.js"></script>
+    <!-- 替换为官方最新的 SDK 地址 -->
+    <script src="https://lf-cdn.coze.cn/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/chat-sdk/web/1.2.0-beta.20/index.js"></script>
 </head>
 <body>
     <h1>欢迎使用 GLP-1 全球价格查询智能体</h1>
     <p>点击右下角的聊天图标，即可开始对话。</p>
 
-    <!-- 配置并初始化 Chat SDK -->
     <script>
-        // 等待 SDK 加载完成后初始化
         window.onload = function() {
+            console.log("页面加载完成，开始初始化 Coze SDK");
             new CozeWebSDK.WebChatClient({
                 config: {
                     type: 'bot',
@@ -52,7 +51,7 @@
                     base: {
                         icon: 'https://lf-coze-web-cdn.coze.cn/obj/eden-cn/lm-lgvj/ljhwZthlaukjlkulzlp/coze/chatsdk-logo.png',
                         layout: 'pc',
-                        lang: 'en',
+                        lang: 'zh-CN', // 改成中文，更友好
                         zIndex: 1000
                     },
                     header: {
@@ -60,7 +59,7 @@
                         isNeedClose: true,
                     },
                     asstBtn: {
-                        isNeed: true
+                        isNeed: true // 确保悬浮球开启
                     },
                     footer: {
                         isShow: true,
