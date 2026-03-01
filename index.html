@@ -21,58 +21,72 @@
             font-size: 18px;
         }
     </style>
-    <!-- 替换为官方最新的 SDK 地址 -->
-    <script src="https://lf-cdn.coze.cn/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/chat-sdk/web/1.2.0-beta.20/index.js"></script>
+    <!-- 改用扣子官方最新稳定版 SDK 地址（核心修复） -->
+    <script src="https://lf-cdn.coze.cn/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/chat-sdk/web/latest/index.js"></script>
 </head>
 <body>
     <h1>欢迎使用 GLP-1 全球价格查询智能体</h1>
     <p>点击右下角的聊天图标，即可开始对话。</p>
 
     <script>
-        window.onload = function() {
-            console.log("页面加载完成，开始初始化 Coze SDK");
-            new CozeWebSDK.WebChatClient({
-                config: {
-                    type: 'bot',
-                    bot_id: '7610382129834688512',
-                    isIframe: true,
-                },
-                auth: {
-                    type: 'token',
-                    token: 'cztei_qpPQ1MEH4f0bDC71ewkU1DoUciJWwtLRrg2HPq43Vjodx0lGsf4CVoQCExI94XlXW',
-                    onRefreshToken: async () => 'token'
-                },
-                userInfo: {
-                    id: 'user',
-                    url: 'https://lf-coze-web-cdn.coze.cn/obj/eden-cn/lm-lgvj/ljhwZthlaukjlkulzlp/coze/coze-logo.png',
-                    nickname: 'User',
-                },
-                ui: {
-                    base: {
-                        icon: 'https://lf-coze-web-cdn.coze.cn/obj/eden-cn/lm-lgvj/ljhwZthlaukjlkulzlp/coze/chatsdk-logo.png',
-                        layout: 'pc',
-                        lang: 'zh-CN', // 改成中文，更友好
-                        zIndex: 1000
+        // 等待页面和 SDK 完全加载，增加容错逻辑
+        document.addEventListener('DOMContentLoaded', function() {
+            // 检查 SDK 是否加载成功
+            if (typeof CozeWebSDK === 'undefined') {
+                alert('SDK 加载失败，请刷新页面重试！');
+                console.error('CozeWebSDK 未加载，检查网络或 SDK 地址');
+                return;
+            }
+
+            // 初始化聊天框
+            try {
+                new CozeWebSDK.WebChatClient({
+                    config: {
+                        type: 'bot',
+                        bot_id: '7610382129834688512',
+                        isIframe: true,
                     },
-                    header: {
-                        isShow: true,
-                        isNeedClose: true,
+                    auth: {
+                        type: 'token',
+                        token: 'cztei_qpPQ1MEH4f0bDC71ewkU1DoUciJWwtLRrg2HPq43Vjodx0lGsf4CVoQCExI94XlXW',
+                        onRefreshToken: async () => 'token'
                     },
-                    asstBtn: {
-                        isNeed: true // 确保悬浮球开启
+                    userInfo: {
+                        id: 'user',
+                        url: 'https://lf-coze-web-cdn.coze.cn/obj/eden-cn/lm-lgvj/ljhwZthlaukjlkulzlp/coze/coze-logo.png',
+                        nickname: 'User',
                     },
-                    footer: {
-                        isShow: true,
-                        expressionText: 'Powered by Coze',
+                    ui: {
+                        base: {
+                            icon: 'https://lf-coze-web-cdn.coze.cn/obj/eden-cn/lm-lgvj/ljhwZthlaukjlkulzlp/coze/chatsdk-logo.png',
+                            layout: 'pc',
+                            lang: 'zh-CN',
+                            zIndex: 1000
+                        },
+                        header: {
+                            isShow: true,
+                            isNeedClose: true,
+                        },
+                        asstBtn: {
+                            isNeed: true // 强制显示悬浮球
+                        },
+                        footer: {
+                            isShow: true,
+                            expressionText: 'Powered by Coze',
+                        },
+                        chatBot: {
+                            title: 'GLP-1 Price Query Bot',
+                            uploadable: true,
+                            width: 390,
+                        },
                     },
-                    chatBot: {
-                        title: 'GLP-1 Price Query Bot',
-                        uploadable: true,
-                        width: 390,
-                    },
-                },
-            });
-        }
+                });
+                console.log('聊天框初始化成功！');
+            } catch (e) {
+                alert('聊天框初始化失败：' + e.message);
+                console.error('初始化报错：', e);
+            }
+        });
     </script>
 </body>
 </html>
